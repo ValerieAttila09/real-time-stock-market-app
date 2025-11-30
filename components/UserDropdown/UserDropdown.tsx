@@ -17,17 +17,14 @@ import {
 } from "@/components/ui/avatar";
 import { LogOut } from "lucide-react";
 import NavItems from "../NavItems/NavItems";
+import { signOut } from "@/lib/actions/auth.actions";
 
-const UserDropdown = () => {
+const UserDropdown = ({ user }: { user: User }) => {
   const router = useRouter();
 
   const handleSignOut = async () => {
+    await signOut();
     router.push("/sign-in");
-  }
-
-  const user = {
-    name: "Valerie",
-    email: "ggwp123@gmail.com"
   }
 
   return (

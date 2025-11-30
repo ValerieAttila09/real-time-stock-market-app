@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 // import "./style.css";
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         className={`${outfitFont.className} antialiased`}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   );
