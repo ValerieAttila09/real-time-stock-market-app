@@ -20,18 +20,22 @@ export const signUpWithEmail = async (
       body: { email, password, name: fullName }
     });
 
-    if (response) {
+    // Signup succeeded; now handle async side effects
+    try {
       await inngest.send({
-        name: 'app/user.created',
+        name: "app/user.created",
         data: {
           email,
           name: fullName,
           country,
           investmentGoals,
           riskTolerance,
-          preferredIndustry
-        }
-      })
+          preferredIndustry,
+        },
+      });
+    } catch (e) {
+      console.error("Failed to enqueue user.created event", e);
+      // Non-blocking; user signup already succeeded
     }
 
     return {
