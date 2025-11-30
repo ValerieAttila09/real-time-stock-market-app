@@ -15,13 +15,13 @@ if (!cached) {
   cached = global.mongooseCache = { conn: null, promise: null };
 }
 
-export const connectToDatabase = async () => {
+export const connectToDatabase = async (): Promise<typeof mongoose> => {
   if (!MONGODB_URI) throw new Error("MONGODB_URI is not defined");
 
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    const opts = { bufferCommands: false, }
+    const opts = { bufferCommands: false };
     cached.promise = mongoose.connect(MONGODB_URI, opts);
   }
 
@@ -32,5 +32,7 @@ export const connectToDatabase = async () => {
     throw err;
   }
 
-  console.log(`Connected to database ${process.env.NODE_ENV} ${MONGODB_URI}`);
+  console.log(`Connected to MongoDB in ${process.env.NODE_ENV} mode`);
+
+  return cached.conn;
 }
